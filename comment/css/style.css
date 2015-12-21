@@ -1,0 +1,39 @@
+@import url("jquery.datetimepicker.css");
+
+.invalid input{
+  border: 2px solid red;
+}
+.invalid::after{
+  content:"!";
+  font-weight:bolder;
+  color:red;
+}
+
+.currentFont {
+  font-family: Agenda-Light, Agenda Light, Agenda, Arial Narrow, sans-serif;
+  text-align: center;
+  color:white;
+  font-size: 120%;
+  text-transform: uppercase;
+  letter-spacing: .2rem;
+}
+
+.myTitleFont{
+	font-family:"Times New Roman", Times, serif;
+	font-weight: normal;
+}
+
+h3{
+	font-family:"Comic Sans MS", cursive, sans-serif;
+	color:#EC3F8C;
+}
+
+li span{
+	font-family:"Times New Roman", Times, serif;
+	font-weight: normal;
+}
+
+.myTitlePro{
+	margin-right:5px;
+}
+

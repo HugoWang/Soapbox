@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+
+<html>
+ 
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Hotspot</title>
+	<link rel="stylesheet" type="text/css" href="css/mystyle.css">
+	<script src="js/sockjs.js"></script>
+	<script src="js/stomp.js"></script>        
+	<script src="js/adapter.js"></script>
+	<script src="js/middleware_api.js"></script>
+	<script src="js/main.js"></script>
+</head>
+ 
+<body class="l1 equal">
+	
+<div id="container">
+	
+	<div id="appName">
+		<div class="content" style="font-size:200%">The Soapbox</div>
+	</div>
+	
+	<div id="content_zone">
+		<div id="primary">
+			<video id="get_video" style="min-width: 100%;min-height: 100%; width: auto;height: auto;"controls autoplay>Video stream not available.</video>
+			<div id="form">
+				<marquee><span class="myTitlePro">Topic:</span><span class="myTitlePro" id="hs_getTopic"></span><span class="myTitlePro">Speaker:</span><span class="myTitlePro" id="hs_getSpeaker"></span></marquee>
+			</div>
+		</div>
+		<div id="secondary">
+			<div id="comment">
+				<div class="content" style="font-size:150%">Shoutbox</div>
+			</div>
+			<div id="listofcomments">
+				<ul id="acomment"></ul>
+			</div>
+		</div>
+		<div id="tertiary">
+			<div class="content">tertiary zone</div>
+		</div>
+	</div>
+	
+	<div id="footer">
+		<div id="feedback">
+			<input style="margin-left:15px;" id="thumbsup" type="image" src="images/like.png" height="120" width="120" onclick="likeSpeech()"/>
+			<span id="like" style="font-size:60px；;">0</span>
+			<input id="thumbsdown" type="image" src="images/dislike.png" height="120" width="120" onclick="dislikeSpeech()"/>
+			<span id="dislike">0</span><span style="margin-top:10px;font-size:60px;">Scan <img src="images/qr.png" height="140" width="140"> to join shoutbox!</span>
+			<button type="button" class="reportButton" id="report" onclick="reportSpeech()">Unsuitable Speech!</button>
+		</div>
+		
+	</div>
+	
+</div>
+
+<script>
+	var hotspot = new Hotspot();
+	//Setup the video object for displaying remote stream
+	var remoteVideo = document.getElementById("get_video");
+	hotspot.setup(remoteVideo);
+	//Connect to the middleware(signaling server)
+	//Four params: onConnect, onError, onReceiveMessage, ConfigParams
+	hotspot.connect(function (){
+		hotspot.onreceivespeechinfo = function (speech_info) {
+			if (speech_info.hasOwnProperty('topic')) {
+				var topic = speech_info.topic;
+				document.getElementById("hs_getTopic").innerHTML = topic;
+			}
+			if (speech_info.hasOwnProperty('speaker')) {
+				var speaker = speech_info.speaker;
+				document.getElementById("hs_getSpeaker").innerHTML = speaker;
+			}
+		}
+		
+		var list = document.getElementById("acomment");
+		hotspot.onreceivecomment = function (username, comment) {
+			var entry = document.createElement('li');
+			entry.appendChild(document.createTextNode(username + ": " + comment));
+			list.appendChild(entry);
+		};
+	
+		//Register likes update callback
+		hotspot.onreceivelikes = function (likes) {
+			//Show the likes info
+			document.getElementById("like").innerHTML = likes;
+			console.log("Current likes: " + likes);  
+		};
+
+		//Register dislikes update callback
+		hotspot.onreceivedislikes = function (dislikes) {
+			document.getElementById("dislike").innerHTML = dislikes;
+			console.log("Current dislikes: " + dislikes); 
+		};
+		
+		hotspot.register();  
+	});
+	
+	function likeSpeech() {
+	x=document.getElementById("thumbsup");
+	x.disabled=true;
+	setTimeout(likeEnable, 3000);
+	}
+
+	function likeEnable() {
+		x.disabled=false;
+		hotspot.like();
+		//x.like();
+		//x.onreceivelikes = function (likes) {
+		//	document.getElementById("like").innerHTML = likes;
+		//};		
+	}
+	 
+	function dislikeSpeech(){
+		y=document.getElementById("thumbsdown");
+		y.disabled=true;
+		setTimeout(dislikeEnable, 2000);
+	}
+
+	function dislikeEnable() {
+		y.disabled=false;
+		hotspot.dislike();
+	}
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css">
+<script src="js/sockjs.js"></script>
+<script src="js/stomp.js"></script>
+<script src="js/adapter.js"></script>
+<script src="js/middleware_api.js"></script>
+</head>
+<body>
+
+<div id="container">
+    <img src="image/1.jpg">
+    <img src="image/2.jpg">
+    <img src="image/3.jpg">
+	<img src="image/4.jpg">
+	<div id="mainContent">
+		<h1>Speech Coming Soon:</h1>
+		<table style="width:100%">
+		  <tr>
+			<td class="property" style="vertical-align:top;text-align:right;margin-right:10px">Topic:</td>
+			<td class="property" style="margin-left:10px" id="ad_getTopic"></td>		
+		  </tr>
+		  <tr>
+			<td class="property" style="text-align:right;margin-right:10px">Speaker:</td>
+			<td class="property" style="margin-left:10px" id="ad_getSpeaker"></td>		
+		  </tr>
+		  <tr>
+			<td class="property" style="text-align:right;margin-right:10px">Time:</td>
+			<td class="property" style="margin-left:10px" id="ad_getTime"></td>		
+		  </tr>
+		</table>
+		<!--
+		<span class="property">Topic:</span><span class="myContent" id="getTopic">Plastic surgery for cosmetic reasons (cosmetic surgery). Is it rising to a level that exceeds good sense?</span><br>
+		<span class="property">Speaker:</span><span class="myContent">Kai Wang</span><br>
+		<span class="property">Time:</span><span class="myContent">01.09.2015 14.00</span>
+		-->
+	</div>
+</div>
+<script>
+	var audience = new Audience();
+	audience.connect(function () {
+		//Set up speech info callback, speech_info is a JSON object
+		audience.onreceivespeechinfo = function (speech_info) {
+			if (speech_info.hasOwnProperty('topic')) {
+				var topic = speech_info.topic;
+				document.getElementById("ad_getTopic").innerHTML = topic;
+			}
+			if (speech_info.hasOwnProperty('speaker')) {
+				var speaker = speech_info.speaker;
+				document.getElementById("ad_getSpeaker").innerHTML = speaker;
+			}
+			if (speech_info.hasOwnProperty('lefttime')) {
+				var lefttime= speech_info.lefttime;
+				document.getElementById("ad_getTime").innerHTML = lefttime;
+			}	
+		}
+		audience.get_speech_info();
+	});
+</script>
+
+</body>
+</html>

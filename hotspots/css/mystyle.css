@@ -1,0 +1,143 @@
+
+/* basic styling */
+@import url("base.css");
+
+/* main layout */
+@import url("layout.css");
+
+#container{
+	width:100%
+	min-width: 780px;
+	min-height: 100%;
+	max-height: 100%;
+	width:expression(document.body.clientWidth < 782? "780px" : document.body.clientWidth > 1262? "1260px" : "auto");
+	margin:0px auto;
+}
+
+.content{
+	padding:10px;
+}
+
+li {
+    height:auto;
+    background:#32313B;
+    border-bottom: 1px solid #39B1C6;
+    padding-top:10px;
+	padding-bottom:10px;
+    color:000;
+    font-family: Helvetica,Arial, Verdana,sans-serif;
+    -webkit-transition: all 1000ms;
+}
+li.current-last{
+    background: #99d;
+}
+#listofcomments {
+    width:100%;
+    height:680px;
+    overflow:auto;
+}
+
+#form{
+    margin-top: 15px;
+	min-width: 100%; 
+	width: auto;
+	background: rgba(0,0,0,0.4);
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+.myTitlePro{
+	font-weight: normal;
+	font-size: 180%;
+	color:white;
+	font-family:Lucida Sans Unicode;
+}
+
+.reportButton {
+	background-color:#EC3F8C;
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius:7px;
+	border:1px solid #EC3F8C;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Verdana;
+	font-size:30px;
+	font-weight:bold;
+	padding:13px 31px;
+	text-decoration:none;
+	text-shadow:0px 0px 16px #2f6627;
+	margin-top:50px;
+	float: right;
+}
+.reportButton:hover {
+	background-color:red;
+}
+.reportButton:active {
+	position:relative;
+	top:1px;
+}
+
+#header{
+	background-color:#25242C;
+	text-align:center;
+	color:#EC3F8C;
+	font-weight: bold;
+}
+
+#video {
+  width:100%;
+  height: 100%;
+}
+
+#appName{
+	background-color:#25242C;
+	text-align:center;
+	color:#EC3F8C;
+	font-weight: bold;
+	font-family: "Comic Sans MS";
+}
+
+#comment{
+	background-color:#39B1C6;
+	text-align:center;
+	color:#ffffff;
+	font-weight: bold;
+}
+
+#feedback{
+letter-spacing:-1px;
+font-size:4em;
+margin-right:15px;
+margin-left:15px;
+}
+
+#footer{
+	background-color:#25242C;
+	color:white;
+}
+
+#footer .content{
+	padding:0;
+	text-align:right;
+}
+
+#primary{
+	background-color:#292830;	
+	min-height: 100%;
+	position: relative;
+} 
+
+#primary div, #primary video {
+    position: absolute;
+}
+
+#secondary{
+	background-color:#32313B;
+	color:white;
+}	
+
+#tertiary{
+	background-color:yellow;
+}
